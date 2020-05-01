@@ -1,6 +1,6 @@
-#ifdef USE_FBGEMM
-
 #include <ATen/native/quantized/cpu/fbgemm_utils.h>
+
+#ifdef USE_FBGEMM
 
 #include <ATen/ATen.h>
 #include <ATen/native/TensorFactories.h>
@@ -197,3 +197,10 @@ Tensor ConvertToChannelsLast3dTensor(const Tensor& src) {
 } // namespace at
 
 #endif // USE_FBGEMM
+
+namespace {
+
+static auto conv2d_params = register_conv_params<2>();
+static auto conv3d_params = register_conv_params<3>();
+
+} // namespace

@@ -134,6 +134,10 @@ class QConvUnpackWeightsInt8 final {
       at::Tensor packed_weight) {
     auto& pack_ptr =
         cpp_custom_type_hack::cast<PackedConvWeightsQnnp>(packed_weight);
+    TORCH_CHECK(
+        pack_ptr.orig_weight.defined(),
+        "Cannot access original weight tensor. "
+        "quantized::conv2d_unpack is currently not supported for qnnpack.");
     return std::tuple<at::Tensor, c10::optional<Tensor>>(
         pack_ptr.orig_weight, pack_ptr.bias);
   }
